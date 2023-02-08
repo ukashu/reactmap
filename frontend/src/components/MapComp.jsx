@@ -9,7 +9,7 @@ import View from 'ol/View.js';
 import {getDistance} from 'ol/sphere';
 import {toLonLat} from 'ol/proj';
 
-export default function MapComp() {
+export default function MapComp(props) {
   const [map, setMap] = useState();
   const mapElement = useRef();
   const mapRef = useRef();
@@ -49,8 +49,10 @@ export default function MapComp() {
         initialMap.addInteraction(draw);
         draw.on('drawend', async function(evt){
           let coordinates = evt.feature.getGeometry().getCoordinates()
+          props.setCoordinates([coordinates[0],coordinates[1]])
           console.log(coordinates)
           let distance = getDistance(toLonLat(coordinates[0]), toLonLat(coordinates[1]))
+          props.setDistance(distance)
           console.log(distance)
         });
       }

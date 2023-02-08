@@ -1,53 +1,25 @@
-import MapComp from './components/MapComp'
-import './App.css'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import {ToastContainer} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import Main from './components/Main'
+import Form from './components/Form'
+import './App.css'
 
 function App() {
-  const savedUser = JSON.parse(localStorage.getItem('user'))
-
-  const [user, setUser] = useState({
-    isLoggedIn: savedUser ? true : false
-  })
-
-  useEffect(()=>{
-
-    /* global google */
-    google.accounts.id.initialize({
-      client_id: "",
-      callback: handleSignInCallback
-    })
-
-    google.accounts.id.renderButton(
-      document.getElementById('signInDiv'),
-      { theme: "outline", size: "large"}
-    )
-  }, [])
-
-
-  async function handleSignInCallback(response) {
-    const res = await axios.post('/api/login/', { id_token: response.credential })
-    //if succesfull - save response res.data object to localstorage as user
-    if (res.data) {
-      localStorage.setItem('user', JSON.stringify(res.data))
-      setUser({ isLoggedIn: true})
-    }
-    //if error Handle TODO
-  }
-
-  function handleLogout() {
-    localStorage.removeItem('user')
-    //refresh page TODO
-  }
 
   return (
-    <div className="App">
-      <div className="header">
-        <h3 className="title">MAPAPP</h3>
-        <div className="sign-in-div" id="signInDiv"></div>
-      </div>
-      <MapComp/>
-    </div>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route exact path='/' element={<Main/>}/>
+          <Route exact path='/form' element={<Form/>}/>
+        </Routes>
+      </BrowserRouter>
+      <ToastContainer />
+    </>
+    
   )
 }
 
