@@ -89,7 +89,19 @@ function Main() {
     try {
       const res = await axios.post('/api/calc', data, config)
       console.log(res.data)
-    } catch(err) { console.log(error); toast.error(err.message) }
+    } catch(err) { toast.error(err.message) }
+  }
+
+  async function saveData(token, data) {
+    const config = {
+      headers: {
+          Authorization: `Bearer ${token}`,
+      },
+    }
+    try {
+      const res = await axios.post('/api/me', data, config)
+      console.log(res.data)
+    } catch(err) { toast.error(err.message) }
   }
 
   return (
@@ -99,13 +111,13 @@ function Main() {
         <div className="sign-in-div" id="signInDiv"></div>
       </div>
       <MapComp setCoordinates={setCoordinates} setDistance={setDistance}/>
-      <label>md:</label>
+      <label>magnetic declination:</label>
       <input type="number" id="md" onChange={handleInputs} value={inputs.md}></input><br></br>
-      <label>tas:</label>
+      <label>true air speed:</label>
       <input type="number" id="tas" onChange={handleInputs} value={inputs.tas}></input><br></br>
-      <label>ws:</label>
+      <label>wind speed:</label>
       <input type="number" id="ws" onChange={handleInputs} value={inputs.ws}></input><br></br>
-      <label>wta:</label>
+      <label>wind true angle:</label>
       <input type="number" id="wta" onChange={handleInputs} value={inputs.wta}></input><br></br>
       <button onClick={()=>{console.log(inputs)}}>log inputs state</button>
       <button onClick={()=>{
@@ -119,8 +131,19 @@ function Main() {
         })
         }}>
         send data to calc
-        </button>
-        <button onClick={()=>{window.open('/form')}}>open form</button>
+      </button>
+      <button onClick={()=>{
+        saveData(savedUser.token, {
+          coordinates: inputs.coordinates,
+          md: Number(inputs.md), 
+          tas: Number(inputs.tas), 
+          ws: Number(inputs.ws), 
+          wta: Number(inputs.wta)
+        })
+        }}>
+        save data
+      </button>
+      <button onClick={()=>{window.open('/form')}}>open form</button>
     </div>
   )
 }

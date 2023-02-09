@@ -18,13 +18,14 @@ model users {
   flights flights[]
 }
 
+//change !! add distance TODO
 model flights {
   id          Int      @id @default(autoincrement())
   user_id     Int
   coordinates String   @db.VarChar(1700)
   md          Int
-  wa          Int
-  wd          Int
+  wta         Int
+  ws          Int
   tas         Int
   date_added  DateTime @default(now())
   users       users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)

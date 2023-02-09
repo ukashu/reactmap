@@ -32,8 +32,8 @@ export default function MapComp(props) {
       layers: [raster, vector],
       target: mapElement.current,
       view: new View({
-        center: [-11000000, 4600000],
-        zoom: 4,
+        center: [2100000, 6790000],
+        zoom: 6,
       }),
     });
 

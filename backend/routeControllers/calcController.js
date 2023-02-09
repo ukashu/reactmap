@@ -2,11 +2,13 @@ const asyncHandler = require('express-async-handler')
 //POST /api/calc
 //calculate variables
 
-//ground speed zmienia się o 20 węzłów przy zmianie stopnia o jeden w praco, czy to się zgadza? NIE TODO
+//TODO change it to calculate multiple parts and return a complex object [{coordinates:[],da:'',mh:'',gs:'',t:''},{coordinates:[],da:'',mh:'',gs:'',t:''}]
+
+//ground speed zmienia się o 20 węzłów przy zmianie stopnia o jeden w prawo, czy to się zgadza? NIE TODO
 //if inputs are 0 response is null TODO
 const getCalc = asyncHandler(async(req, res) => {
   //it doesn't support zero values!! TODO
-  if (req.body.coordinates.length === 0 || req.body.coordinates === undefined || req.body.distance === undefined || req.body.md === undefined || req.body.tas === undefined || req.body.ws === undefined || req.body.wta === undefined) {
+  if (req.body.coordinates.length === 0 || req.body.coordinates === undefined || req.body.distance === undefined || req.body.md === undefined || !req.body.tas || req.body.ws === undefined || req.body.wta === undefined) {
     res.status(400)
     throw new Error('Please provide all outside variables')
   }
