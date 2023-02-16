@@ -31,17 +31,24 @@ const login = asyncHandler(async(req, res) => {
     console.log('user is authenticated by google')
 
     //upsert the user TODO
-    await prisma.users.upsert({
-      where: {
-        email: user.email,
-      },
-      update: {},
-      create: {
-        gid: user.id,
-        email: user.email,
-        name: user.name
-      },
-    })
+    try {
+      await prisma.users.upsert({
+        where: {
+          email: user.email,
+        },
+        update: {},
+        create: {
+          gid: user.id,
+          email: user.email,
+          name: user.name
+        },
+      })
+    } catch(err) {
+      res.status(400)
+      throw new Error('Google sign in unsuccessful')
+    }
+    
+    
 
     //send the response to save in localstorage
     res.json({

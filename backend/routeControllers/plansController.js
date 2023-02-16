@@ -11,12 +11,11 @@ const getPlans = asyncHandler(async(req, res) => {
         user_id: Number(req.user.id)
       }
     })
+    console.log(result)
   } catch(err) {
     res.status(400)
     throw new Error('Database query failed')
   }
-  
-  console.log(result)
 
   res.json({message: 'okay'})
 })

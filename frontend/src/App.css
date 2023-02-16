@@ -33,3 +33,17 @@
   align-self: center;
   padding-right: 10px;
 }
+
+.logged-in-div {
+  max-height:100px;
+  align-self: center;
+  padding-right: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logged-in-div > img {
+  margin: 5px;
+}

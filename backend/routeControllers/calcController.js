@@ -1,4 +1,5 @@
 const asyncHandler = require('express-async-handler')
+const { declinationAPI } = require('../apis/declinationAPI.js')
 //POST /api/calc
 //calculate variables
 
@@ -8,7 +9,7 @@ const asyncHandler = require('express-async-handler')
 //if inputs are 0 response is null TODO
 const getCalc = asyncHandler(async(req, res) => {
   //it doesn't support zero values!! TODO
-  if (req.body.coordinates.length === 0 || req.body.coordinates === undefined || req.body.distance === undefined || req.body.md === undefined || !req.body.tas || req.body.ws === undefined || req.body.wta === undefined) {
+  if (req.body.coordinates.length === 0 || req.body.coordinates === undefined || req.body.geoCoordinates === undefined|| req.body.distance === undefined || req.body.md === undefined || !req.body.tas || req.body.ws === undefined || req.body.wta === undefined) {
     res.status(400)
     throw new Error('Please provide all outside variables')
   }
@@ -21,6 +22,10 @@ const getCalc = asyncHandler(async(req, res) => {
   let resultObj = calc(azimuth, Number(req.body.distance), Number(req.body.md), Number(req.body.tas), Number(req.body.ws), Number(req.body.wta))
 
   console.log(resultObj)
+
+  // //MD scraper test
+  // const decl = await declinationAPI.get(req.body.geoCoordinates[1], req.body.geoCoordinates[0])
+  // console.log(Number(decl))
 
   res.json({ azimuth: azimuth.toString(), ...resultObj })
 })

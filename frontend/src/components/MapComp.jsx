@@ -50,6 +50,7 @@ export default function MapComp(props) {
         draw.on('drawend', async function(evt){
           let coordinates = evt.feature.getGeometry().getCoordinates()
           props.setCoordinates([coordinates[0],coordinates[1]])
+          props.setGeoCoordinates(toLonLat(coordinates[0]))
           console.log(coordinates)
           let distance = getDistance(toLonLat(coordinates[0]), toLonLat(coordinates[1]))
           props.setDistance(distance)
