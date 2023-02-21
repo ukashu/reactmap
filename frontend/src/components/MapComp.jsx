@@ -49,10 +49,13 @@ export default function MapComp(props) {
         initialMap.addInteraction(draw);
         draw.on('drawend', async function(evt){
           let coordinates = evt.feature.getGeometry().getCoordinates()
-          props.setCoordinates([coordinates[0],coordinates[1]])
+          props.setCoordinates(coordinates)
           props.setGeoCoordinates(toLonLat(coordinates[0]))
           console.log(coordinates)
-          let distance = getDistance(toLonLat(coordinates[0]), toLonLat(coordinates[1]))
+          let distance = []
+          for (let i = 0; i < coordinates.length - 1; i++) {
+            distance.push(getDistance(toLonLat(coordinates[i]), toLonLat(coordinates[i+1])))
+          }
           props.setDistance(distance)
           console.log(distance)
         });

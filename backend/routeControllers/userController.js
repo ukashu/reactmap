@@ -65,6 +65,7 @@ const login = asyncHandler(async(req, res) => {
 })
 
 const generateToken = (id) => {
+  //TODO catch errors here
   return jwt.sign({ id }, process.env.JWT_SECRET, {
       expiresIn: '1d',
   })

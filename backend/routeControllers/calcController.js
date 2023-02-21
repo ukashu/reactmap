@@ -5,7 +5,7 @@ const { declinationAPI } = require('../apis/declinationAPI.js')
 
 //TODO change it to calculate multiple parts and return a complex object [{coordinates:[],da:'',mh:'',gs:'',t:''},{coordinates:[],da:'',mh:'',gs:'',t:''}]
 
-//ground speed zmienia się o 20 węzłów przy zmianie stopnia o jeden w prawo, czy to się zgadza? NIE TODO
+//ground speed zmienia się o 20 węzłów przy zmianie stopnia o jeden w prawo, czy to się zgadza? TODO
 //if inputs are 0 response is null TODO
 const getCalc = asyncHandler(async(req, res) => {
   //it doesn't support zero values!! TODO
@@ -16,18 +16,20 @@ const getCalc = asyncHandler(async(req, res) => {
 
   let coordinates = req.body.coordinates
 
-  let azimuth = calcAngle(coordinates[0], coordinates[1])
-  azimuth = Math.round(azimuth)
+  let resultsObj = []
 
-  let resultObj = calc(azimuth, Number(req.body.distance), Number(req.body.md), Number(req.body.tas), Number(req.body.ws), Number(req.body.wta))
+  //return calc for all sections
+  for (let i = 0; i < coordinates.length - 1; i++) {
+    resultsObj.push(calc(coordinates[i], coordinates[i+1], Number(req.body.distance[i]), Number(req.body.md), Number(req.body.tas), Number(req.body.ws), Number(req.body.wta)))
+  }
 
-  console.log(resultObj)
+  console.log({resultsObj})
 
   // //MD scraper test
   // const decl = await declinationAPI.get(req.body.geoCoordinates[1], req.body.geoCoordinates[0])
   // console.log(Number(decl))
 
-  res.json({ azimuth: azimuth.toString(), ...resultObj })
+  res.json({ ...resultsObj })
 })
 
 //calc angle
@@ -57,7 +59,11 @@ function calcAngleDegrees(x, y) {
 }
 
 //other route calculations
-function calc(TT, S, MD, TAS, WS, WTA) {
+function calc(cord1, cord2, S, MD, TAS, WS, WTA) {
+  //calculate TT
+  let TT = calcAngle(cord1, cord2)
+  TT = Math.round(TT)
+
   //change TT from 0 to 360
   if (TT === 0) {
     TT = 360
@@ -85,7 +91,7 @@ function calc(TT, S, MD, TAS, WS, WTA) {
   let T = (60*metersToNautical(S))/GS
 
   //round only on output
-  return {DA, MH, GS, T}
+  return {TT: TT.toString(), DA, MH, GS, T}
 }
 
 function metersToNautical(distance) {

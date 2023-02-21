@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const dotenv = require('dotenv').config()
+require('dotenv').config()
 const { errorHandler } = require('./middleware/errorMiddleware')
 const { protect } = require('./middleware/authMiddleware')
 const { login } = require('./routeControllers/userController.js')
