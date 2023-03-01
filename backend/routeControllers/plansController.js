@@ -11,27 +11,30 @@ const getPlans = asyncHandler(async(req, res) => {
         user_id: Number(req.user.id)
       }
     })
-    console.log(result)
+    res.json(result)
   } catch(err) {
     res.status(400)
     throw new Error('Database query failed')
   }
-
-  res.json({message: 'okay'})
 })
 
 //POST /api/me
 //save calculated plan in db
 const savePlan = asyncHandler(async(req, res) => {
-  if (req.body.coordinates.length === 0 || req.body.coordinates === undefined || req.body.md === undefined || !req.body.tas || req.body.ws === undefined || req.body.wta === undefined) {
+  if (req.body.name === undefined || req.body.coordinates.length === 0 || req.body.coordinates === undefined || req.body.md === undefined || !req.body.tas || req.body.ws === undefined || req.body.wta === undefined) {
     res.status(400)
     throw new Error('Please provide all outside variables')
+  }
+  if (req.body.name.length > 25) {
+    res.status(400)
+    throw new Error('Flight name is too long')
   }
 
   try {
     await prisma.flights.create({
       data: {
         user_id: Number(req.user.id),
+        name: req.body.name,
         coordinates: JSON.stringify(req.body.coordinates),
         md: req.body.md,
         wta: req.body.wta,

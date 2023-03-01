@@ -22,6 +22,7 @@ model users {
 model flights {
   id          Int      @id @default(autoincrement())
   user_id     Int
+  name        String   @db.VarChar(25)
   coordinates String   @db.VarChar(1700)
   md          Int
   wta         Int

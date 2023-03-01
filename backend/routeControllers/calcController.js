@@ -23,13 +23,11 @@ const getCalc = asyncHandler(async(req, res) => {
     resultsObj.push(calc(coordinates[i], coordinates[i+1], Number(req.body.distance[i]), Number(req.body.md), Number(req.body.tas), Number(req.body.ws), Number(req.body.wta)))
   }
 
-  console.log({resultsObj})
-
   // //MD scraper test
   // const decl = await declinationAPI.get(req.body.geoCoordinates[1], req.body.geoCoordinates[0])
   // console.log(Number(decl))
 
-  res.json({ ...resultsObj })
+  res.json(resultsObj)
 })
 
 //calc angle
@@ -58,7 +56,7 @@ function calcAngleDegrees(x, y) {
   return angle
 }
 
-//other route calculations
+//main route calculations
 function calc(cord1, cord2, S, MD, TAS, WS, WTA) {
   //calculate TT
   let TT = calcAngle(cord1, cord2)
@@ -94,8 +92,8 @@ function calc(cord1, cord2, S, MD, TAS, WS, WTA) {
   return {TT: TT.toString(), DA, MH, GS, T}
 }
 
-function metersToNautical(distance) {
-  let miles = distance.toFixed(2) / 1852
+function metersToNautical(meters) {
+  let miles = meters.toFixed(2) / 1852
   return miles
 }
 

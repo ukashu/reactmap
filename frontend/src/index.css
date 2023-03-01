@@ -1,4 +1,6 @@
 body {
   margin: 0;
   height: 100%;
+  background-image: url("./assets/clouds.jpg");
+  background-size:100%
 }

@@ -22,18 +22,6 @@ function Main() {
     })
   }, [])
 
-  useEffect(()=>{
-    if (!user.isLoggedIn) {
-      google.accounts.id.renderButton(
-        document.getElementById('signInDiv'),
-        { theme: "outline", size: "large"}
-      )
-    } else {
-      //get routes
-    }
-  }, [user.isLoggedIn])
-
-
   async function handleSignInCallback(response) {
     try {
       const res = await axios.post('/api/login/', { id_token: response.credential })
@@ -56,10 +44,42 @@ function Main() {
     //refresh page TODO
   }
 
+  const [flights, setFlights] = useState([])
+  const [flightComponents, setFlightComponents] = useState([])
+
+  //login useEffect
+  useEffect(()=>{
+    if (!user.isLoggedIn) {
+      google.accounts.id.renderButton(
+        document.getElementById('signInDiv'),
+        { theme: "outline", size: "large"}
+      )
+    } else {
+      //get routes
+      getSaved(savedUser.token)
+    }
+  }, [user.isLoggedIn])
+
+  useEffect(()=>{
+    if (flights.length > 0) {
+      console.log('now flights are different')
+      setFlightComponents(renderFlights())
+    }
+  }, [flights])
+
+  //render users saved Flights
+  function renderFlights() {
+    let flightsArr = flights.map((item)=>{
+      return <div><p>{item.name}</p><br></br><p>{item.date_added}</p></div>
+    })
+    return flightsArr
+  }
+
   //inputs
   const [inputs, setInputs] = useState({
     coordinates: [],
     geoCoordinates: [],
+    name: "",
     distance: 0,
     md: 0,
     tas: 0,
@@ -99,6 +119,21 @@ function Main() {
         [evt.target.id]: evt.target.value
       }
     })
+  }
+
+  async function getSaved(token) {
+    const config = {
+      headers: {
+          Authorization: `Bearer ${token}`,
+      },
+    }
+    try {
+      const res = await axios.get('/api/me', config)
+      setFlights(res.data)
+    } catch(err) { 
+      if (err.response.data.message) {toast.error(err.response.data.message) }
+      else {toast.error(err.message)}
+    }
   }
 
   async function sendDataToCalculate(data) {
@@ -142,42 +177,64 @@ function Main() {
           </div> 
         }
       </div>
-      <MapComp setCoordinates={setCoordinates} setGeoCoordinates={setGeoCoordinates} setDistance={setDistance}/>
-      <label>magnetic declination:</label>
-      <input type="number" id="md" onChange={handleInputs} value={inputs.md}></input><br></br>
-      <label>true air speed:</label>
-      <input type="number" id="tas" onChange={handleInputs} value={inputs.tas}></input><br></br>
-      <label>wind speed:</label>
-      <input type="number" id="ws" onChange={handleInputs} value={inputs.ws}></input><br></br>
-      <label>wind true angle:</label>
-      <input type="number" id="wta" onChange={handleInputs} value={inputs.wta}></input><br></br>
-      <button onClick={()=>{console.log(inputs)}}>log inputs state</button>
-      <button onClick={()=>{
-        sendDataToCalculate({
-          coordinates: inputs.coordinates, 
-          geoCoordinates: inputs.geoCoordinates,
-          distance: inputs.distance, 
-          md: Number(inputs.md), 
-          tas: Number(inputs.tas), 
-          ws: Number(inputs.ws), 
-          wta: Number(inputs.wta)
-        })
-        }}>
-        send data to calc
-      </button>
-      <button onClick={()=>{
-        saveData(savedUser.token, {
-          coordinates: inputs.coordinates,
-          geoCoordinates: inputs.geoCoordinates,
-          md: Number(inputs.md), 
-          tas: Number(inputs.tas), 
-          ws: Number(inputs.ws), 
-          wta: Number(inputs.wta)
-        })
-        }}>
-        save data
-      </button>
-      <button onClick={()=>{window.open('/form')}}>open form</button>
+      <div className="map_and_inputs">
+        <MapComp setCoordinates={setCoordinates} setGeoCoordinates={setGeoCoordinates} setDistance={setDistance}/>
+        <div className="inputs">
+          <div>
+            <label>magnetic declination:</label>
+            <input className="input" type="number" id="md" onChange={handleInputs} value={inputs.md}></input>
+          </div>
+          <div>
+            <label>true air speed:</label>
+            <input className="input" type="number" id="tas" onChange={handleInputs} value={inputs.tas}></input>
+          </div>
+          <div>
+            <label>wind speed:</label>
+            <input className="input" type="number" id="ws" onChange={handleInputs} value={inputs.ws}></input>
+          </div>
+          <div>
+            <label>wind true angle:</label>
+            <input className="input" type="number" id="wta" onChange={handleInputs} value={inputs.wta}></input>
+          </div>
+          <div>
+            <label>flight name</label>
+            <input className="input" type="string" id="name" onChange={handleInputs} value={inputs.name}></input>
+          </div>
+          <button className="button" onClick={()=>{console.log(inputs)}}>log inputs state</button>
+          <button className="button" onClick={()=>{
+            sendDataToCalculate({
+              coordinates: inputs.coordinates, 
+              geoCoordinates: inputs.geoCoordinates,
+              distance: inputs.distance, 
+              md: Number(inputs.md), 
+              tas: Number(inputs.tas), 
+              ws: Number(inputs.ws), 
+              wta: Number(inputs.wta)
+            })
+            }}>
+            send data to calc
+          </button>
+          <button className="button" onClick={()=>{
+            if (!savedUser || !savedUser.token) {return toast.error('Not logged in')}
+            saveData(savedUser.token, {
+              name: inputs.name,
+              coordinates: inputs.coordinates,
+              geoCoordinates: inputs.geoCoordinates,
+              md: Number(inputs.md), 
+              tas: Number(inputs.tas), 
+              ws: Number(inputs.ws), 
+              wta: Number(inputs.wta)
+            })
+            }}>
+            save data
+          </button>
+          <button className="button" onClick={()=>{window.open('/form')}}>open as a form</button>
+        </div>
+      </div>
+      <div id="savedFlights">
+        Flights
+        {flightComponents}
+      </div>
     </div>
   )
 }

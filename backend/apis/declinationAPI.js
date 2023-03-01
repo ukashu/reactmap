@@ -38,7 +38,7 @@ const declinationAPI = {
     decl = decl[0].split(' ')
     decl = decl[decl.length-1]
 
-    return decl
+    return Number(decl)
   
     } catch(err) {
       throw new Error(err)
