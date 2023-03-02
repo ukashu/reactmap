@@ -59,6 +59,16 @@ export default function MapComp(props) {
           props.setDistance(distance)
           console.log(distance)
         });
+        if (props.savedFlight) {
+          let flight = JSON.parse(props.savedFlight)
+          draw.appendCoordinates(JSON.parse(flight.coordinates))
+          props.loadInputs("md", flight.md)
+          props.loadInputs("tas", flight.tas)
+          props.loadInputs("ws", flight.ws)
+          props.loadInputs("wta", flight.wta)
+          props.loadInputs("name", flight.name)
+          draw.finishDrawing()
+        }
       }
     }
 

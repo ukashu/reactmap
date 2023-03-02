@@ -3,10 +3,12 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import {toast} from 'react-toastify'
 import MapComp from './MapComp'
+import Flight from './Flight'
 import '../App.css'
 
 function Main() {
   const savedUser = JSON.parse(localStorage.getItem('user'))
+  const savedFlight = localStorage.getItem('saved-flight')
 
   //this doesn't verify if token stored is valid TODO
   const [user, setUser] = useState({
@@ -70,7 +72,14 @@ function Main() {
   //render users saved Flights
   function renderFlights() {
     let flightsArr = flights.map((item)=>{
-      return <div><p>{item.name}</p><br></br><p>{item.date_added}</p></div>
+      return <Flight setStored={()=>{localStorage.setItem('saved-flight', JSON.stringify({
+        coordinates: item.coordinates,
+        name: item.name,
+        md: item.md,
+        wta: item.wta,
+        ws: item.ws,
+        tas: item.tas
+      }))}} key={item.id} id={item.id} name={item.name} date={item.date_added}></Flight>
     })
     return flightsArr
   }
@@ -107,6 +116,15 @@ function Main() {
     setInputs((prevState) => {
       return {
         ...prevState, distance: distance
+      }
+    })
+  }
+
+  function loadInputs(name, data) {
+    setInputs((prevState)=>{
+      return {
+        ...prevState,
+        [name]: data
       }
     })
   }
@@ -178,7 +196,12 @@ function Main() {
         }
       </div>
       <div className="map_and_inputs">
-        <MapComp setCoordinates={setCoordinates} setGeoCoordinates={setGeoCoordinates} setDistance={setDistance}/>
+        <MapComp savedFlight={savedFlight}
+          setCoordinates={setCoordinates}
+          setGeoCoordinates={setGeoCoordinates}
+          setDistance={setDistance}
+          loadInputs={loadInputs}
+          />
         <div className="inputs">
           <div>
             <label>magnetic declination:</label>
@@ -231,8 +254,7 @@ function Main() {
           <button className="button" onClick={()=>{window.open('/form')}}>open as a form</button>
         </div>
       </div>
-      <div id="savedFlights">
-        Flights
+      <div className="flight_container" id="savedFlights">
         {flightComponents}
       </div>
     </div>
