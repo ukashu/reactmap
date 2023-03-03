@@ -72,14 +72,17 @@ function Main() {
   //render users saved Flights
   function renderFlights() {
     let flightsArr = flights.map((item)=>{
-      return <Flight setStored={()=>{localStorage.setItem('saved-flight', JSON.stringify({
-        coordinates: item.coordinates,
-        name: item.name,
-        md: item.md,
-        wta: item.wta,
-        ws: item.ws,
-        tas: item.tas
-      }))}} key={item.id} id={item.id} name={item.name} date={item.date_added}></Flight>
+      return <Flight setStored={()=>{
+        localStorage.setItem('saved-flight', JSON.stringify({
+          coordinates: item.coordinates,
+          name: item.name,
+          md: item.md,
+          wta: item.wta,
+          ws: item.ws,
+          tas: item.tas
+          }))
+          window.location.reload()
+        }} key={item.id} id={item.id} name={item.name} date={item.date_added}></Flight>
     })
     return flightsArr
   }
@@ -149,7 +152,11 @@ function Main() {
       const res = await axios.get('/api/me', config)
       setFlights(res.data)
     } catch(err) { 
-      if (err.response.data.message) {toast.error(err.response.data.message) }
+      if (err.response.data.message) {
+        //logout if token expired or sth
+        if (err.response.statusText === "Unauthorized") {handleLogout()}
+        toast.error(err.response.data.message) 
+      }
       else {toast.error(err.message)}
     }
   }
@@ -191,7 +198,7 @@ function Main() {
           <div className="logged-in-div">
             <img src={savedUser.picture} style={{height: "30px"}}></img>
             <h4>{savedUser.name}</h4>
-            <button onClick={handleLogout}>logout</button>
+            <button id="logout" className="small-button" onClick={handleLogout}>logout</button>
           </div> 
         }
       </div>
@@ -223,8 +230,8 @@ function Main() {
             <label>flight name</label>
             <input className="input" type="string" id="name" onChange={handleInputs} value={inputs.name}></input>
           </div>
-          <button className="button" onClick={()=>{console.log(inputs)}}>log inputs state</button>
-          <button className="button" onClick={()=>{
+          <button className="button" id="log-inputs" onClick={()=>{console.log(inputs)}}>log inputs state</button>
+          <button className="button" id="send-data-to-calc" onClick={()=>{
             sendDataToCalculate({
               coordinates: inputs.coordinates, 
               geoCoordinates: inputs.geoCoordinates,
@@ -237,7 +244,7 @@ function Main() {
             }}>
             send data to calc
           </button>
-          <button className="button" onClick={()=>{
+          <button className="button" id="save-data" onClick={()=>{
             if (!savedUser || !savedUser.token) {return toast.error('Not logged in')}
             saveData(savedUser.token, {
               name: inputs.name,
@@ -251,9 +258,16 @@ function Main() {
             }}>
             save data
           </button>
-          <button className="button" onClick={()=>{window.open('/form')}}>open as a form</button>
+          <button className="button" id="open-as-a-form"onClick={()=>{window.open('/form')}}>open as a form</button>
         </div>
       </div>
+      <button id="undo" className="small-button">undo</button>
+      <button className="small-button" onClick={()=>{
+        localStorage.removeItem('saved-flight')
+        window.location.reload()
+        }}
+      id="clear">clear
+      </button>
       <div className="flight_container" id="savedFlights">
         {flightComponents}
       </div>

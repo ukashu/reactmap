@@ -91,7 +91,6 @@ export default function MapComp(props) {
   return (
     <div className="Map">
       <div ref={mapElement} id="map"></div>
-      <button id="undo">undo</button>
     </div>
   )
 }
