@@ -43,7 +43,7 @@ function Main() {
   function handleLogout() {
     localStorage.removeItem('user')
     setUser({ isLoggedIn: false })
-    //refresh page TODO
+    window.location.reload()
   }
 
   const [flights, setFlights] = useState([])
