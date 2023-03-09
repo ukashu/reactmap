@@ -21,9 +21,9 @@ async function login(page) {
 
   //generate jwt for that user and save in localstorage as session - sessionFactory
   const token = generateToken(user.id)
-  const data = JSON.stringify({_id: user.id, name: user.name, email: user.email, token: token,picture: 'https://lh3.googleusercontent.com/a/AGNmyxaAUncMc5zS7dT4TAMv5pAwzgeTWrSsZTUHVKE6=s96-c'})
+  const data = JSON.stringify({_id: user.id, name: user.name, email: user.email, token: token, picture: 'https://lh3.googleusercontent.com/a/AGNmyxaAUncMc5zS7dT4TAMv5pAwzgeTWrSsZTUHVKE6=s96-c'})
 
-  await page.evaluateOnNewDocument((data) => {
+  await page.evaluate((data) => {
     localStorage.clear();
     localStorage.setItem('user', data);
   }, data);

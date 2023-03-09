@@ -42,6 +42,7 @@ function Main() {
 
   function handleLogout() {
     localStorage.removeItem('user')
+    localStorage.removeItem('saved-flight')
     setUser({ isLoggedIn: false })
     window.location.reload()
   }
