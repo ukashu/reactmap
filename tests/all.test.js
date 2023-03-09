@@ -1,4 +1,6 @@
 const puppeteer = require('puppeteer')
+const { login } = require('./helpers/userHelpers')
+const { sleep } = require('./helpers/helperFunctions')
 
 beforeEach(async()=>{
   browser = await puppeteer.launch({
@@ -11,11 +13,11 @@ beforeEach(async()=>{
   await page.reload()
 })
 
-afterEach(async () => {
-  await browser.close();
-});
-
 describe('When not logged in ', ()=>{
+
+  afterEach(async () => {
+    await browser.close();
+  });
 
   test('login button is displayed', async()=>{
   
@@ -112,9 +114,21 @@ describe('When not logged in ', ()=>{
 })
 
 describe('When logged in ', ()=>{
-  //before each login
+  //before each - create user in db and login
+  let deleteUser
+  beforeEach(async()=>{
+    deleteUser = await login(page)
+  })
+  //after each - delete created user
+  afterEach(async () => {
+    deleteUser()
+    await browser.close();
+  });
 
-  test.todo('logout button is displayed')
+  test.only('logout button is displayed', async () => {
+    
+    await sleep(2000)
+  })
 
   describe('when logout button is clicked ', ()=>{
 
@@ -122,6 +136,8 @@ describe('When logged in ', ()=>{
 
     test.todo('page is refreshed')
   })
+
+  test.todo('User cannot see other users flights')//in there save flight, logout, create another user, login, check if that user sees any flights
 
   describe('when using invalid inputs ', ()=>{
 
@@ -137,5 +153,9 @@ describe('When logged in ', ()=>{
     test.todo('flight shows up on screen')
   })
 
-  test.todo('clicking on saved flight refreshes the page and flight shows up on screen')
+  test.todo('clicking on saved flight refreshes the page and flight gets saved to localstorage')
+
+  test.todo('clicking on clear refreshes the page and flights gets deleted from localstorage')
+
+  test.todo('clicking on undo deletes last drawn point')
 })

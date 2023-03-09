@@ -14,12 +14,15 @@ const protect = asyncHandler(async (req, res, next) => {
       //Verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
-      // Get user from the token TODO
+      // Get user from the token
       const foundUser = await prisma.users.findUnique({
         where: {
           gid: decoded.id,
         },
       })
+
+      //handle if not found here eles you get an error
+      //TypeError: Cannot read properties of null (reading 'id')
 
       req.user = {
         id: foundUser.id,
