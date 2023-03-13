@@ -49,18 +49,6 @@ describe('When not logged in ', ()=>{
 
   describe('when using no inputs ', ()=>{
 
-    //later no calculate change TODO
-    test('clicking calculate displays toast error', async() => {
-
-      await page.click("button#send-data-to-calc")
-
-      await page.waitForSelector("div.Toastify__toast")
-      const toast = await page.$eval("div.Toastify__toast", el => el.innerHTML)
-
-      const result = toast ? true : false
-      expect(result).toEqual(true)
-    })
-
     test('clicking save displays toast error', async() => {
 
       await page.click("button#save-data")
@@ -84,7 +72,7 @@ describe('When not logged in ', ()=>{
   describe('when using valid inputs ', ()=>{
 
     //it should calculate, save response in storage and then open form with data loaded from storage TODO
-    test.todo('open as form opens form in new tab')
+    test.todo('calculate and open as form opens form in new tab')
 
     test('save data displays toast error', async() => {
 
@@ -156,8 +144,6 @@ describe('When logged in ', ()=>{
         return user
       });
 
-      console.log(user)
-
       const result = user ? true : false
       expect(result).toEqual(false)
     })
@@ -223,7 +209,7 @@ describe('When logged in ', ()=>{
   describe('when using no inputs ', ()=>{
 
     //later no calculate change TODO
-    test('clicking calculate displays toast error', async() => {
+    test('clicking calculate and open as form displays toast error', async() => {
 
       await page.click("button#send-data-to-calc")
 
@@ -244,12 +230,10 @@ describe('When logged in ', ()=>{
       const result = toast ? true : false
       expect(result).toEqual(true)
     })
-
-    test.todo('clicking open as form displays toast error')
   })
 
   describe('when using invalid inputs ', ()=>{
-    test.todo('clicking calculate displays toast error')
+    test.todo('clicking calculate and open as form displays toast error')
 
     test.todo('clicking save displays toast error')
   })
@@ -257,10 +241,42 @@ describe('When logged in ', ()=>{
   describe('when using valid inputs ', ()=>{
 
     //it should calculate, save response in storage and then open form with data loaded from storage TODO
-    test.todo('open as form opens form in new tab')
+    test.todo('calculate and open as form opens form in new tab')
 
-    test.todo('flight shows up on screen')
-  })
+    test('flight shows up on screen', async() => {
+      await page.mouse.click(450, 350)
+      await page.mouse.click(480, 320)
+      await page.mouse.click(400, 300)
+      await page.mouse.click(400, 300)
+
+      await page.click("input#md")
+      await page.keyboard.type('6')
+
+      await page.click("input#tas")
+      await page.keyboard.type('65')
+
+      await page.click("input#ws")
+      await page.keyboard.type('35')
+
+      await page.click("input#wta")
+      await page.keyboard.type('269')
+
+      await page.click("input#name")
+      await page.keyboard.type('automated test flight 1')
+
+      //save flight
+      await page.click("button#save-data")
+
+      //refresh page
+      await page.reload()
+
+      const savedFlights = await page.$eval("div#savedFlights", el => el.innerHTML)
+
+      //check
+      const result = savedFlights ? true : false
+      expect(result).toEqual(true)
+      });
+    })
 
   test('clicking on saved flight refreshes the page and flight gets saved to localstorage', async() => {
     //create flight 1
@@ -320,10 +336,9 @@ describe('When logged in ', ()=>{
     await page.reload()
 
     //click saved flight 1
-    //TODO clicking does nothing
     await page.click("div#savedFlights div:first-child")
 
-    await sleep(500)
+    await sleep(300)
 
     //check if name input value is automated test flight 1
     const name = await page.$eval("input#name", el => el.value)

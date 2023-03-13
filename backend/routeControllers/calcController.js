@@ -1,9 +1,6 @@
 const asyncHandler = require('express-async-handler')
-const { declinationAPI } = require('../apis/declinationAPI.js')
 //POST /api/calc
 //calculate variables
-
-//TODO change it to calculate multiple parts and return a complex object [{coordinates:[],da:'',mh:'',gs:'',t:''},{coordinates:[],da:'',mh:'',gs:'',t:''}]
 
 //ground speed zmienia się o 20 węzłów przy zmianie stopnia o jeden w prawo, czy to się zgadza? TODO
 //if inputs are 0 response is null TODO
@@ -22,10 +19,6 @@ const getCalc = asyncHandler(async(req, res) => {
   for (let i = 0; i < coordinates.length - 1; i++) {
     resultsObj.push(calc(coordinates[i], coordinates[i+1], Number(req.body.distance[i]), Number(req.body.md), Number(req.body.tas), Number(req.body.ws), Number(req.body.wta)))
   }
-
-  // //MD scraper test
-  // const decl = await declinationAPI.get(req.body.geoCoordinates[1], req.body.geoCoordinates[0])
-  // console.log(Number(decl))
 
   res.json(resultsObj)
 })

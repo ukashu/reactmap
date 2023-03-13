@@ -6,6 +6,8 @@ const { protect } = require('./middleware/authMiddleware')
 const { login } = require('./routeControllers/userController.js')
 const { getCalc } = require('./routeControllers/calcController.js')
 const { getPlans, savePlan } = require('./routeControllers/plansController.js')
+const { getDeclination } = require('./routeControllers/outsideCallsController.js')
+const { getWind } = require('./routeControllers/outsideCallsController.js')
 
 const PORT = process.env.PORT || 5000
 
@@ -15,6 +17,8 @@ app.use(express.urlencoded({extended: false}))
 app.route('/api/login').post(login)
 app.route('/api/me').get(protect, getPlans).post(protect, savePlan)
 app.route('/api/calc').post(getCalc)
+app.route('/api/declination').post(getDeclination)
+app.route('/api/wind').post(getWind)
 
 app.use(errorHandler)
 

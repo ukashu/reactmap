@@ -2,8 +2,7 @@ const axios = require('axios')
 const { errorHandler } = require("./axiosUtils.js")
 
 const windClient = axios.create({
-  baseURL: "",
-  headers: ""
+  baseURL: "https://api.open-meteo.com/v1/forecast",
 })
 
 const declinationClient = axios.create({

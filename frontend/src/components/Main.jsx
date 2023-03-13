@@ -143,6 +143,39 @@ function Main() {
     })
   }
 
+  async function getDeclination(data) {
+    try {
+      const res = await axios.post('/api/declination', data)
+      console.log(res.data.declination)
+      setInputs((prevState)=>{
+        return {
+          ...prevState,
+          md: res.data.declination
+        }
+      })
+    } catch(err) { 
+      if (err.response.data.message) {toast.error(err.response.data.message) }
+      else {toast.error(err.message)}
+    }
+  }
+
+  async function getWind(data) {
+    try {
+      const res = await axios.post('/api/wind', data)
+      console.log(res.data)
+      setInputs((prevState)=>{
+        return {
+          ...prevState,
+          ws: res.data.ws,
+          wta: res.data.wta
+        }
+      })
+    } catch(err) { 
+      if (err.response.data.message) {toast.error(err.response.data.message) }
+      else {toast.error(err.message)}
+    }
+  }
+
   async function getSaved(token) {
     const config = {
       headers: {
@@ -213,6 +246,9 @@ function Main() {
         <div className="inputs">
           <div>
             <label>magnetic declination:</label>
+            <button id="declinationAPI" onClick={()=>{
+              getDeclination({geoCoordinates: inputs.geoCoordinates})
+            }}>auto</button>
             <input className="input" type="number" id="md" onChange={handleInputs} value={inputs.md}></input>
           </div>
           <div>
@@ -221,6 +257,9 @@ function Main() {
           </div>
           <div>
             <label>wind speed:</label>
+            <button id="windAPI" onClick={()=>{
+              getWind({geoCoordinates: inputs.geoCoordinates})
+            }}>auto</button>
             <input className="input" type="number" id="ws" onChange={handleInputs} value={inputs.ws}></input>
           </div>
           <div>
