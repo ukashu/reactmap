@@ -200,6 +200,7 @@ function Main() {
     try {
       const res = await axios.post('/api/calc', data)
       console.log(res.data)
+      window.open('/form')
     } catch(err) { 
       if (err.response.data.message) {toast.error(err.response.data.message) }
       else {toast.error(err.message)}
@@ -246,7 +247,7 @@ function Main() {
         <div className="inputs">
           <div>
             <label>magnetic declination:</label>
-            <button id="declinationAPI" onClick={()=>{
+            <button id="MD-auto" onClick={()=>{
               getDeclination({geoCoordinates: inputs.geoCoordinates})
             }}>auto</button>
             <input className="input" type="number" id="md" onChange={handleInputs} value={inputs.md}></input>
@@ -257,7 +258,7 @@ function Main() {
           </div>
           <div>
             <label>wind speed:</label>
-            <button id="windAPI" onClick={()=>{
+            <button id="wind-auto" onClick={()=>{
               getWind({geoCoordinates: inputs.geoCoordinates})
             }}>auto</button>
             <input className="input" type="number" id="ws" onChange={handleInputs} value={inputs.ws}></input>

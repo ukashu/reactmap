@@ -4,7 +4,7 @@ const { sleep } = require('./helpers/helperFunctions')
 
 beforeEach(async()=>{
   browser = await puppeteer.launch({
-    headless: false,
+    headless: true,
     defaultViewport: null
   })
   page = await browser.newPage()
@@ -46,6 +46,10 @@ describe('When not logged in ', ()=>{
     const result = savedFlights ? true : false
     expect(result).toEqual(false)
   })
+
+  test.todo('MD auto button works')
+
+  test.todo('wind auto button works')
 
   describe('when using no inputs ', ()=>{
 
@@ -205,6 +209,10 @@ describe('When logged in ', ()=>{
     const result = savedFlights ? true : false
     expect(result).toEqual(false)
   })
+
+  test.todo('MD auto button works')
+
+  test.todo('wind auto button works')
 
   describe('when using no inputs ', ()=>{
 
