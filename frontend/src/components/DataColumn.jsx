@@ -7,7 +7,7 @@ function DataColumn(props) {
 
   return (
     <div className="DataColumn">
-      <div><p>{props.name}</p></div>
+      <div STYLE={{display: "flex", alignItems: "center"}}><p>{props.name.toUpperCase()}</p></div>
       <div></div>
       <div></div>
       <div></div>

@@ -45,7 +45,7 @@ h2 {
 
 .subpage > div {
   border: solid 1px black;
-  margin: 2px 0px 2px 0px;
+  margin: 1px 0px 1px 0px;
   min-height: 40px;
 }
 
@@ -53,40 +53,40 @@ h2 {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  padding: 2px 0px 2px 2px;
+  padding: 1px 0px 1px 1px;
 }
 
   .data-box > div {
     min-height: 40px;
     width: 100%;
     border: solid 1px black;
-    margin: 0px 2px 0px 0px;
+    margin: 0px 1px 0px 0px;
   }
 
 .zgoda-box {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-  height: 152px;
+  justify-content: space-between;
+  height: 147px;
 }
 
   .zgoda-container {
     min-height: 40px;
     min-width: 200px;
-    padding: 2px 2px 0px 2px;
+    padding: 1px 1px 0px 1px;
   }
 
   .zgoda-container > div {
     min-height: 35px;
     width: 100%;
     border: solid 1px black;
-    margin: 0px 0px 2px 0px;
+    margin: 0px 0px 1px 0px;
   }
 
 .trasa-box {
   display: flex;
   flex-direction: row;
-  padding: 2px 2px 2px 2px;
+  padding: 1px 1px 1px 1px;
 }
 
   .trasa {
@@ -121,7 +121,7 @@ h2 {
 .zapas-box {
   display: flex;
   flex-direction: row;
-  padding: 2px 2px 2px 2px;
+  padding: 1px 1px 1px 1px;
 }
 
   .zapas-box > div {
