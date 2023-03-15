@@ -168,7 +168,7 @@
       background: rgba(217, 217, 217, 0.58);
       backdrop-filter: blur(15px);
       width: calc(25% - 10px - (60px/4));
-      border-radius: 10px;
+      border-radius: 5px;
       display: flex;
       flex-direction: column;
     }
@@ -187,4 +187,5 @@
     .Flight > p {
       height: 50%;
       text-align: center;
+      font-size: 14px;
     }

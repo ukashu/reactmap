@@ -2,6 +2,9 @@ import './Form.css'
 import DataColumn from './DataColumn'
 
 function Page() {
+  const calcData = JSON.parse(localStorage.getItem('calculated-flight'))
+
+  console.log(calcData)
 
   return (
   <div className="page">
@@ -37,18 +40,18 @@ function Page() {
               <div></div>
               <div></div>
             </div>
-            <DataColumn name="nkdg" display="TT"></DataColumn>
-            <DataColumn name="m" display="MD"></DataColumn>
-            <DataColumn name="nkdm" display="MH"></DataColumn>
-            <DataColumn name="kz" display="DA"></DataColumn>
-            <DataColumn name="km"></DataColumn>
-            <DataColumn name="kb"></DataColumn>
-            <DataColumn name="s"></DataColumn>
-            <DataColumn name="w"></DataColumn>
-            <DataColumn name="t"></DataColumn>
-            <DataColumn name="eto"></DataColumn>
-            <DataColumn name="ato"></DataColumn>
-            <DataColumn name="5'"></DataColumn>
+            <DataColumn name="nkdg" display="TT" data={calcData}></DataColumn>
+            <DataColumn name="m" display="MD" data={calcData}></DataColumn>
+            <DataColumn name="nkdm" display="MH" data={calcData}></DataColumn>
+            <DataColumn name="kz" display="DA" data={calcData}></DataColumn>
+            <DataColumn name="km" data={calcData}></DataColumn>
+            <DataColumn name="kb" data={calcData}></DataColumn>
+            <DataColumn name="s" data={calcData} display="S"></DataColumn>
+            <DataColumn name="w" data={calcData}></DataColumn>
+            <DataColumn name="t" data={calcData}></DataColumn>
+            <DataColumn name="eto" data={calcData}></DataColumn>
+            <DataColumn name="ato" data={calcData}></DataColumn>
+            <DataColumn name="5'" data={calcData}></DataColumn>
           </div>
           <div id="zapas-1-box" className="zapas-box">
             <div style={{minWidth: "100px", borderLeft: "solid 1px black"}}><p>LOTN. ZAPAS. I</p></div>
@@ -63,9 +66,11 @@ function Page() {
             <div></div>
             <div></div>
             <div></div>
+            <div></div>
           </div>
           <div id="zapas-2-box" className="zapas-box">
             <div style={{minWidth: "100px", borderLeft: "solid 1px black"}}><p>LOTN. ZAPAS. II</p></div>
+            <div></div>
             <div></div>
             <div></div>
             <div></div>

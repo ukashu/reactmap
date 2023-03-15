@@ -81,8 +81,10 @@ function calc(cord1, cord2, S, MD, TAS, WS, WTA) {
   //calculate time
   let T = (60*metersToNautical(S))/GS
 
+  //added rounding temporarily
+
   //round only on output
-  return {TT: TT.toString(), DA, MH, GS, T}
+  return {TT: TT.toString(), DA: Math.round(DA), MH: Math.round(MH), GS: Math.round(GS), T: Math.round(T), S: Math.round(metersToNautical(S))}
 }
 
 function metersToNautical(meters) {

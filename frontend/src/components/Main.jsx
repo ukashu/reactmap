@@ -43,6 +43,8 @@ function Main() {
   function handleLogout() {
     localStorage.removeItem('user')
     localStorage.removeItem('saved-flight')
+    localStorage.removeItem('calculated-flight')
+    //add calculated-flight removing
     setUser({ isLoggedIn: false })
     window.location.reload()
   }
@@ -200,6 +202,15 @@ function Main() {
     try {
       const res = await axios.post('/api/calc', data)
       console.log(res.data)
+      await localStorage.setItem('calculated-flight', JSON.stringify({
+        sections: res.data,
+        constants: {
+          MD: inputs.md, 
+          TAS: inputs.tas, 
+          WS: inputs.ws,
+          WTA: inputs.wta
+        }
+      })) //await needed i think
       window.open('/form')
     } catch(err) { 
       if (err.response.data.message) {toast.error(err.response.data.message) }
