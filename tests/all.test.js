@@ -47,9 +47,51 @@ describe('When not logged in ', ()=>{
     expect(result).toEqual(false)
   })
 
-  test.todo('MD auto button works')
+  test('MD auto button works', async () => {
 
-  test.todo('wind auto button works')
+    //draw flight
+    await page.mouse.click(450, 350)
+    await page.mouse.click(480, 320)
+    await page.mouse.click(400, 300)
+    await page.mouse.click(400, 300)
+
+    //click on md
+    await page.click("button#MD-auto")
+
+    //pause
+    await sleep(2000)
+
+    //check if md changed
+    const md = await page.$eval("input#md", el => el.value)
+
+    let result
+    if (md !== "0") { result = true } else { result = false }
+
+    expect(result).toEqual(true)
+  })
+
+  test('wind auto button works', async () => {
+
+    //draw flight
+    await page.mouse.click(450, 350)
+    await page.mouse.click(480, 320)
+    await page.mouse.click(400, 300)
+    await page.mouse.click(400, 300)
+
+    //click on md
+    await page.click("button#wind-auto")
+
+    //pause
+    await sleep(2000)
+
+    //check if md changed
+    const md = await page.$eval("input#ws", el => el.value)
+
+    let result
+    if (md !== "0") { result = true } else { result = false }
+
+    expect(result).toEqual(true)
+  })
 
   describe('when using no inputs ', ()=>{
 
@@ -64,7 +106,16 @@ describe('When not logged in ', ()=>{
       expect(result).toEqual(true)
     })
 
-    test.todo('clicking open as form displays toast error')
+    test('clicking calculate and open as form displays toast error', async() => {
+
+      await page.click("button#send-data-to-calc")
+
+      await page.waitForSelector("div.Toastify__toast")
+      const toast = await page.$eval("div.Toastify__toast", el => el.innerHTML)
+
+      const result = toast ? true : false
+      expect(result).toEqual(true)
+    })
   })
 
   describe('when using invalid inputs ', ()=>{
@@ -75,21 +126,64 @@ describe('When not logged in ', ()=>{
 
   describe('when using valid inputs ', ()=>{
 
-    //it should calculate, save response in storage and then open form with data loaded from storage TODO
-    test.todo('calculate and open as form opens form in new tab')
+    test('calculate and open as form opens form in new tab', async () => {
+      let tas = '65'
+
+      //draw flight
+      await page.mouse.click(450, 350)
+      await page.mouse.click(480, 320)
+      await page.mouse.click(400, 300)
+      await page.mouse.click(400, 300)
+
+      await page.click("input#md")
+      await page.keyboard.press('Backspace');
+      await page.keyboard.type('6')
+
+      await page.click("input#tas")
+      await page.keyboard.press('Backspace');
+      await page.keyboard.type(tas)
+
+      await page.click("input#ws")
+      await page.keyboard.press('Backspace');
+      await page.keyboard.type('35')
+
+      await page.click("input#wta")
+      await page.keyboard.press('Backspace');
+      await page.keyboard.type('269')
+
+      await page.click("input#name")
+      await page.keyboard.type('automated test flight')
+
+      //open as form
+      await page.click("button#send-data-to-calc")
+
+      await sleep(1000)
+
+      await page.goto('http://localhost:5173/form');
+
+      await page.waitForSelector("p#tas")
+      const ptas = await page.$eval("p#tas", el => el.innerHTML)
+
+      const result = ptas === tas ? true : false
+      expect(result).toEqual(true)
+    })
 
     test('save data displays toast error', async() => {
 
       await page.click("input#md")
+      await page.keyboard.press('Backspace');
       await page.keyboard.type('6')
 
       await page.click("input#tas")
+      await page.keyboard.press('Backspace');
       await page.keyboard.type('65')
 
       await page.click("input#ws")
+      await page.keyboard.press('Backspace');
       await page.keyboard.type('35')
 
       await page.click("input#wta")
+      await page.keyboard.press('Backspace');
       await page.keyboard.type('269')
 
       await page.click("input#name")
@@ -171,15 +265,19 @@ describe('When logged in ', ()=>{
     await page.mouse.click(400, 300)
 
     await page.click("input#md")
+    await page.keyboard.press('Backspace');
     await page.keyboard.type('6')
 
     await page.click("input#tas")
+    await page.keyboard.press('Backspace');
     await page.keyboard.type('65')
 
     await page.click("input#ws")
+    await page.keyboard.press('Backspace');
     await page.keyboard.type('35')
 
     await page.click("input#wta")
+    await page.keyboard.press('Backspace');
     await page.keyboard.type('269')
 
     await page.click("input#name")
@@ -210,9 +308,51 @@ describe('When logged in ', ()=>{
     expect(result).toEqual(false)
   })
 
-  test.todo('MD auto button works')
+  test('MD auto button works', async () => {
 
-  test.todo('wind auto button works')
+    //draw flight
+    await page.mouse.click(450, 350)
+    await page.mouse.click(480, 320)
+    await page.mouse.click(400, 300)
+    await page.mouse.click(400, 300)
+
+    //click on md
+    await page.click("button#MD-auto")
+
+    //pause
+    await sleep(2000)
+
+    //check if md changed
+    const md = await page.$eval("input#md", el => el.value)
+
+    let result
+    if (md !== "0") { result = true } else { result = false }
+
+    expect(result).toEqual(true)
+  })
+
+  test('wind auto button works', async () => {
+
+    //draw flight
+    await page.mouse.click(450, 350)
+    await page.mouse.click(480, 320)
+    await page.mouse.click(400, 300)
+    await page.mouse.click(400, 300)
+
+    //click on md
+    await page.click("button#wind-auto")
+
+    //pause
+    await sleep(2000)
+
+    //check if md changed
+    const md = await page.$eval("input#ws", el => el.value)
+
+    let result
+    if (md !== "0") { result = true } else { result = false }
+
+    expect(result).toEqual(true)
+  })
 
   describe('when using no inputs ', ()=>{
 
@@ -248,8 +388,47 @@ describe('When logged in ', ()=>{
 
   describe('when using valid inputs ', ()=>{
 
-    //it should calculate, save response in storage and then open form with data loaded from storage TODO
-    test.todo('calculate and open as form opens form in new tab')
+    test('calculate and open as form opens form in new tab', async () => {
+      let tas = '65'
+
+      //draw flight
+      await page.mouse.click(450, 350)
+      await page.mouse.click(480, 320)
+      await page.mouse.click(400, 300)
+      await page.mouse.click(400, 300)
+
+      await page.click("input#md")
+      await page.keyboard.press('Backspace');
+      await page.keyboard.type('6')
+
+      await page.click("input#tas")
+      await page.keyboard.press('Backspace');
+      await page.keyboard.type(tas)
+
+      await page.click("input#ws")
+      await page.keyboard.press('Backspace');
+      await page.keyboard.type('35')
+
+      await page.click("input#wta")
+      await page.keyboard.press('Backspace');
+      await page.keyboard.type('269')
+
+      await page.click("input#name")
+      await page.keyboard.type('automated test flight')
+
+      //open as form
+      await page.click("button#send-data-to-calc")
+
+      await sleep(1000)
+
+      await page.goto('http://localhost:5173/form');
+
+      await page.waitForSelector("p#tas")
+      const ptas = await page.$eval("p#tas", el => el.innerHTML)
+
+      const result = ptas === tas ? true : false
+      expect(result).toEqual(true)
+    })
 
     test('flight shows up on screen', async() => {
       await page.mouse.click(450, 350)
@@ -258,15 +437,19 @@ describe('When logged in ', ()=>{
       await page.mouse.click(400, 300)
 
       await page.click("input#md")
+      await page.keyboard.press('Backspace');
       await page.keyboard.type('6')
 
       await page.click("input#tas")
+      await page.keyboard.press('Backspace');
       await page.keyboard.type('65')
 
       await page.click("input#ws")
+      await page.keyboard.press('Backspace');
       await page.keyboard.type('35')
 
       await page.click("input#wta")
+      await page.keyboard.press('Backspace');
       await page.keyboard.type('269')
 
       await page.click("input#name")
@@ -294,15 +477,19 @@ describe('When logged in ', ()=>{
     await page.mouse.click(400, 300)
 
     await page.click("input#md")
+    await page.keyboard.press('Backspace');
     await page.keyboard.type('6')
 
     await page.click("input#tas")
+    await page.keyboard.press('Backspace');
     await page.keyboard.type('65')
 
     await page.click("input#ws")
+    await page.keyboard.press('Backspace');
     await page.keyboard.type('35')
 
     await page.click("input#wta")
+    await page.keyboard.press('Backspace');
     await page.keyboard.type('269')
 
     await page.click("input#name")
@@ -322,15 +509,19 @@ describe('When logged in ', ()=>{
     await page.mouse.click(500, 500)
 
     await page.click("input#md")
+    await page.keyboard.press('Backspace');
     await page.keyboard.type('6')
 
     await page.click("input#tas")
+    await page.keyboard.press('Backspace');
     await page.keyboard.type('65')
 
     await page.click("input#ws")
+    await page.keyboard.press('Backspace');
     await page.keyboard.type('35')
 
     await page.click("input#wta")
+    await page.keyboard.press('Backspace');
     await page.keyboard.type('269')
 
     await page.click("input#name")
@@ -351,8 +542,6 @@ describe('When logged in ', ()=>{
     //check if name input value is automated test flight 1
     const name = await page.$eval("input#name", el => el.value)
 
-    console.log(name)
-
     expect(name).toEqual('automated test flight 1')
   })
 
@@ -363,8 +552,6 @@ describe('When logged in ', ()=>{
       const savedFlight = localStorage.getItem('saved-flight');
       return savedFlight
     });
-
-    console.log(savedFlight)
 
     const result = savedFlight ? true : false
     expect(result).toEqual(false)

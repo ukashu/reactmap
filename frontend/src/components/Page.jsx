@@ -44,7 +44,7 @@ function Page() {
             <div id="zgoda-odlot" className="zgoda-odlot"><p>ZGODA (ODLOT)</p><textarea id="zgoda-odlot"></textarea></div>
             <div className="zgoda-container">
               <div id="kierunek-wiatru" className="kierunek-wiatru"><p>KIERUNEK WIATRU</p><p style={{fontSize: "14px"}}>{calcData.constants.WTA}</p></div>
-              <div id="tas" className="tas"><p>TAS</p><p style={{fontSize: "14px"}}>{calcData.constants.TAS}</p></div>
+              <div id="tas" className="tas"><p>TAS</p><p id="tas" style={{fontSize: "14px"}}>{calcData.constants.TAS}</p></div>
               <div id="licznik" className="licznik"><p>LICZNIK</p><textarea id="licznik" style={{height: "19px"}}></textarea></div>
               <div id="start" className="start"><p>START</p><textarea id="start" style={{height: "19px"}}></textarea></div>
             </div>

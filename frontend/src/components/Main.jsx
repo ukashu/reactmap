@@ -282,7 +282,6 @@ function Main() {
             <label>flight name</label>
             <input className="input" type="string" id="name" onChange={handleInputs} value={inputs.name}></input>
           </div>
-          <button className="button" id="log-inputs" onClick={()=>{console.log(inputs)}}>log inputs state</button>
           <button className="button" id="send-data-to-calc" onClick={()=>{
             sendDataToCalculate({
               coordinates: inputs.coordinates, 
@@ -294,7 +293,7 @@ function Main() {
               wta: Number(inputs.wta)
             })
             }}>
-            send data to calc
+            calculate and open as form
           </button>
           <button className="button" id="save-data" onClick={()=>{
             if (!savedUser || !savedUser.token) {return toast.error('Not logged in')}
@@ -310,7 +309,6 @@ function Main() {
             }}>
             save data
           </button>
-          <button className="button" id="open-as-a-form"onClick={()=>{window.open('/form')}}>open as a form</button>
         </div>
       </div>
       <button id="undo" className="small-button">undo</button>
