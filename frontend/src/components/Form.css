@@ -70,6 +70,16 @@ h2 {
   height: 147px;
 }
 
+  .zgoda-odlot {
+    width: 100%;
+    text-align: left;
+  }
+
+    .zgoda-odlot > textarea {
+      font-size: 2vmin;
+      text-align: left;
+    }
+
   .zgoda-container {
     min-height: 40px;
     min-width: 200px;
@@ -78,6 +88,7 @@ h2 {
 
   .zgoda-container > div {
     min-height: 35px;
+    max-height: 35px;
     width: 100%;
     border: solid 1px black;
     margin: 0px 0px 1px 0px;
@@ -132,6 +143,32 @@ h2 {
     border-bottom: solid 1px black;
     flex: 1;
   }
+
+  textarea {
+
+  /* usual styles */
+  padding: 0px 0px 0px 0px;
+  text-align: center;
+  border:none;
+  resize: none;
+  outline: none;
+  overflow: auto;
+  background-color:#ffffff;
+  color:#000000;
+  font-size: 1.5vmin;
+  word-wrap: break-word;
+  width:100%;
+  height: calc(100% - 14px);
+}
+
+textarea:hover {
+  transition: 0.2s;
+  background-color: yellow;
+}
+
+textarea:focus {
+  background-color: yellow;
+}
 
 @page {
   size: A4;
