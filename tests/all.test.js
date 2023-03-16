@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer')
 const { login } = require('./helpers/userHelpers')
-const { sleep } = require('./helpers/helperFunctions')
+const { sleep, drawAndInput } = require('./helpers/helperFunctions')
 
 beforeEach(async()=>{
   browser = await puppeteer.launch({
@@ -78,17 +78,17 @@ describe('When not logged in ', ()=>{
     await page.mouse.click(400, 300)
     await page.mouse.click(400, 300)
 
-    //click on md
+    //click on wind
     await page.click("button#wind-auto")
 
     //pause
     await sleep(2000)
 
-    //check if md changed
-    const md = await page.$eval("input#ws", el => el.value)
+    //check if wind changed
+    const wind = await page.$eval("input#ws", el => el.value)
 
     let result
-    if (md !== "0") { result = true } else { result = false }
+    if (wind !== "0") { result = true } else { result = false }
 
     expect(result).toEqual(true)
   })
@@ -119,9 +119,31 @@ describe('When not logged in ', ()=>{
   })
 
   describe('when using invalid inputs ', ()=>{
-    test.todo('clicking calculate displays toast error')
+    beforeEach(async () => {
+      await drawAndInput(page, 'automated test flight 1', '6500')
+    })
 
-    test.todo('clicking save displays toast error')
+    test('clicking calculate and open as form displays toast error', async () => {
+
+      await page.click("button#send-data-to-calc")
+
+      await page.waitForSelector("div.Toastify__toast")
+      const toast = await page.$eval("div.Toastify__toast", el => el.innerHTML)
+
+      const result = toast ? true : false
+      expect(result).toEqual(true)
+    })
+
+    test('clicking save displays toast error', async () => {
+
+      await page.click("button#save-data")
+
+      await page.waitForSelector("div.Toastify__toast")
+      const toast = await page.$eval("div.Toastify__toast", el => el.innerHTML)
+
+      const result = toast ? true : false
+      expect(result).toEqual(true)
+    })
   })
 
   describe('when using valid inputs ', ()=>{
@@ -130,29 +152,7 @@ describe('When not logged in ', ()=>{
       let tas = '65'
 
       //draw flight
-      await page.mouse.click(450, 350)
-      await page.mouse.click(480, 320)
-      await page.mouse.click(400, 300)
-      await page.mouse.click(400, 300)
-
-      await page.click("input#md")
-      await page.keyboard.press('Backspace');
-      await page.keyboard.type('6')
-
-      await page.click("input#tas")
-      await page.keyboard.press('Backspace');
-      await page.keyboard.type(tas)
-
-      await page.click("input#ws")
-      await page.keyboard.press('Backspace');
-      await page.keyboard.type('35')
-
-      await page.click("input#wta")
-      await page.keyboard.press('Backspace');
-      await page.keyboard.type('269')
-
-      await page.click("input#name")
-      await page.keyboard.type('automated test flight')
+      await drawAndInput(page, 'automatedTestFlight', tas)
 
       //open as form
       await page.click("button#send-data-to-calc")
@@ -187,7 +187,7 @@ describe('When not logged in ', ()=>{
       await page.keyboard.type('269')
 
       await page.click("input#name")
-      await page.keyboard.type('automated test flight')
+      await page.keyboard.type('automatedTestFlight')
 
       await page.click("button#save-data")
       await page.waitForSelector("div.Toastify__toast")
@@ -259,29 +259,7 @@ describe('When logged in ', ()=>{
   test('User cannot see other users flights', async() => {//in there save flight, logout, create another user, login, check if that user sees any flights
 
     //draw flight
-    await page.mouse.click(450, 350)
-    await page.mouse.click(480, 320)
-    await page.mouse.click(400, 300)
-    await page.mouse.click(400, 300)
-
-    await page.click("input#md")
-    await page.keyboard.press('Backspace');
-    await page.keyboard.type('6')
-
-    await page.click("input#tas")
-    await page.keyboard.press('Backspace');
-    await page.keyboard.type('65')
-
-    await page.click("input#ws")
-    await page.keyboard.press('Backspace');
-    await page.keyboard.type('35')
-
-    await page.click("input#wta")
-    await page.keyboard.press('Backspace');
-    await page.keyboard.type('269')
-
-    await page.click("input#name")
-    await page.keyboard.type('automated test flight')
+    await drawAndInput(page, 'automatedTestFlight', '65')
 
     //save flight
     await page.click("button#save-data")
@@ -381,9 +359,32 @@ describe('When logged in ', ()=>{
   })
 
   describe('when using invalid inputs ', ()=>{
-    test.todo('clicking calculate and open as form displays toast error')
 
-    test.todo('clicking save displays toast error')
+    beforeEach(async () => {
+      await drawAndInput(page, 'automated test flight 1', '6500')
+    })
+
+    test('clicking calculate and open as form displays toast error', async () => {
+
+      await page.click("button#send-data-to-calc")
+
+      await page.waitForSelector("div.Toastify__toast")
+      const toast = await page.$eval("div.Toastify__toast", el => el.innerHTML)
+
+      const result = toast ? true : false
+      expect(result).toEqual(true)
+    })
+
+    test('clicking save displays toast error', async () => {
+
+      await page.click("button#save-data")
+
+      await page.waitForSelector("div.Toastify__toast")
+      const toast = await page.$eval("div.Toastify__toast", el => el.innerHTML)
+
+      const result = toast ? true : false
+      expect(result).toEqual(true)
+    })
   })
 
   describe('when using valid inputs ', ()=>{
@@ -392,29 +393,7 @@ describe('When logged in ', ()=>{
       let tas = '65'
 
       //draw flight
-      await page.mouse.click(450, 350)
-      await page.mouse.click(480, 320)
-      await page.mouse.click(400, 300)
-      await page.mouse.click(400, 300)
-
-      await page.click("input#md")
-      await page.keyboard.press('Backspace');
-      await page.keyboard.type('6')
-
-      await page.click("input#tas")
-      await page.keyboard.press('Backspace');
-      await page.keyboard.type(tas)
-
-      await page.click("input#ws")
-      await page.keyboard.press('Backspace');
-      await page.keyboard.type('35')
-
-      await page.click("input#wta")
-      await page.keyboard.press('Backspace');
-      await page.keyboard.type('269')
-
-      await page.click("input#name")
-      await page.keyboard.type('automated test flight')
+      await drawAndInput(page, 'automatedTestFlight', tas)
 
       //open as form
       await page.click("button#send-data-to-calc")
@@ -431,29 +410,9 @@ describe('When logged in ', ()=>{
     })
 
     test('flight shows up on screen', async() => {
-      await page.mouse.click(450, 350)
-      await page.mouse.click(480, 320)
-      await page.mouse.click(400, 300)
-      await page.mouse.click(400, 300)
 
-      await page.click("input#md")
-      await page.keyboard.press('Backspace');
-      await page.keyboard.type('6')
-
-      await page.click("input#tas")
-      await page.keyboard.press('Backspace');
-      await page.keyboard.type('65')
-
-      await page.click("input#ws")
-      await page.keyboard.press('Backspace');
-      await page.keyboard.type('35')
-
-      await page.click("input#wta")
-      await page.keyboard.press('Backspace');
-      await page.keyboard.type('269')
-
-      await page.click("input#name")
-      await page.keyboard.type('automated test flight 1')
+      //draw flight
+      await drawAndInput(page, 'automatedTestFlight1', '65')
 
       //save flight
       await page.click("button#save-data")
@@ -470,63 +429,18 @@ describe('When logged in ', ()=>{
     })
 
   test('clicking on saved flight refreshes the page and flight gets saved to localstorage', async() => {
-    //create flight 1
-    await page.mouse.click(450, 350)
-    await page.mouse.click(480, 320)
-    await page.mouse.click(400, 300)
-    await page.mouse.click(400, 300)
-
-    await page.click("input#md")
-    await page.keyboard.press('Backspace');
-    await page.keyboard.type('6')
-
-    await page.click("input#tas")
-    await page.keyboard.press('Backspace');
-    await page.keyboard.type('65')
-
-    await page.click("input#ws")
-    await page.keyboard.press('Backspace');
-    await page.keyboard.type('35')
-
-    await page.click("input#wta")
-    await page.keyboard.press('Backspace');
-    await page.keyboard.type('269')
-
-    await page.click("input#name")
-    await page.keyboard.type('automated test flight 1')
-
+    //create and save flight 1
+    await drawAndInput(page, 'automatedTestFlight1', '65')
     await page.click("button#save-data")
 
     await sleep(300)
 
     await page.click('button#clear')
+
     await sleep(300)
 
-    //create flight 2
-    await page.mouse.click(550, 550)
-    await page.mouse.click(580, 520)
-    await page.mouse.click(500, 500)
-    await page.mouse.click(500, 500)
-
-    await page.click("input#md")
-    await page.keyboard.press('Backspace');
-    await page.keyboard.type('6')
-
-    await page.click("input#tas")
-    await page.keyboard.press('Backspace');
-    await page.keyboard.type('65')
-
-    await page.click("input#ws")
-    await page.keyboard.press('Backspace');
-    await page.keyboard.type('35')
-
-    await page.click("input#wta")
-    await page.keyboard.press('Backspace');
-    await page.keyboard.type('269')
-
-    await page.click("input#name")
-    await page.keyboard.type('automated test flight 2')
-
+    //create and save flight 2
+    await drawAndInput(page, 'automatedTestFlight2', '65')
     await page.click("button#save-data")
 
     await sleep(300)
@@ -534,15 +448,17 @@ describe('When logged in ', ()=>{
     //refresh page
     await page.reload()
 
+    await sleep(300)
+
     //click saved flight 1
     await page.click("div#savedFlights div:first-child")
 
     await sleep(300)
 
-    //check if name input value is automated test flight 1
+    //check if name input value is automatedTestFlight1
     const name = await page.$eval("input#name", el => el.value)
 
-    expect(name).toEqual('automated test flight 1')
+    expect(name).toEqual('automatedTestFlight1')
   })
 
   test('clicking on clear refreshes the page and flights gets deleted from localstorage', async() => {

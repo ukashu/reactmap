@@ -41,7 +41,6 @@ function calcAngleDegrees(x, y) {
   }
   angle = angle.toFixed(2)
   if (x < 0 && y >= 0 ) {
-    console.log('Q4')
     angle = (90- angle) + 360
   } else {
     angle = 90 - angle
