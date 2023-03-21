@@ -1,8 +1,8 @@
-# Flight Planning Web Application
+# Flight Planning web application
 
 >## Description
 
-&nbsp;&nbsp;&nbsp;&nbsp;This application calculates data needed for a flight plan based on input data and a route drawn on a OpenLayers provided map. It features an option to read magnetic declination and wind data from external sources via HTTP. It provides authorization built around google sign in and JWT and a possibility of saving previous flights in a PostgreSQL database.
+&nbsp;&nbsp;&nbsp;&nbsp;This application calculates data needed for a flight plan based on input data and a route drawn on a OpenLayers provided map. It features an option to read magnetic declination and wind data from external sources via HTTP. It provides authorization built around google sign in and JWT tokens and a possibility of saving previous flights in a PostgreSQL database.
 
 >## Technology stack
 
@@ -40,15 +40,15 @@
 <ul>
   <li>node installed</li>
   <li>npm installed</li>
-  <li>postgresql (or other) database</li>
-  <li>google developer account and an application with client id</li>
+  <li>PostgreSQL (or other) database</li>
+  <li>Google Cloud Platform access and an application with client id</li>
 </ul>
 
-1. Run the initialization script ```npm run init```. This will run npm install for backend and frontend and create the .env file. When asked, specify the environment variables. 
+1. Run the initialization script ```npm run init```. This will run npm install for backend and frontend and create the ```.env``` file. When asked, specify the environment variables. 
 
-2. If you're on Windows, you might have to create the .env file manually. You'll need the following variables:
+2. If you're on Windows, you might have to create the ```.env``` file manually. You'll need the following variables:
   - PORT (backend servers port number)
-  - NODE_ENV (variable for specifying the apps environment - development or production)
+  - NODE_ENV (variable for specifying the apps environment - "development" or "production")
   - GOOGLE_CLIENT_ID (your applications google client id - found in google cloud console)
   - JWT_SECRET (key for generating JWT tokens)
   - DATABASE_URL (for postgresql database hosted on local machine  - ```postgres://[USERNAME]:[PASSWORD]@localhost:5432/[DATABASE_NAME]```)
