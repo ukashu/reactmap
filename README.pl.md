@@ -1,3 +1,4 @@
+[![eng](https://img.shields.io/badge/lang-eng-blue.svg)](https://github.com/ukashu/reactmap/blob/main/README.md)
 # Aplikacja webowa do planowania lotów
 
 >## Opis

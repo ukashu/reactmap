@@ -1,3 +1,4 @@
+[![pl](https://img.shields.io/badge/lang-pl-blue.svg)](https://github.com/ukashu/reactmap/blob/main/README.pl.md)
 # Flight Planning web application
 
 >## Description
