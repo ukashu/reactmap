@@ -47,12 +47,14 @@
 
 1. Uruchom skrypt ```npm run init```. Zainstaluje on zależności projektu dla backendu i frontendu oraz stworzy plik ```.env```. Przy pytaniach wprowadź zmienne środowiskowe.
 
-2. Jeżeli korzystasz z systemu Windows plik ```.env``` może nie wygenerować się automatycznie i będzie trzeba stworzyć go ręcznie. W pliku ```.env``` potrzebujesz następujących zmiennych:
+2. Jeżeli korzystasz z systemu Windows plik ```.env``` może nie wygenerować się automatycznie i będzie trzeba utworzyć go ręcznie. W pliku ```.env``` potrzebujesz następujących zmiennych:
   - PORT (port serwera backend)
   - NODE_ENV (zmienna określająca środowisko aplikacji - "development" lub "production")
   - GOOGLE_CLIENT_ID (google client id twojej aplikacji - znajdziesz w Google Cloud Console)
   - JWT_SECRET (klucz do generacji tokenów JWT)
   - DATABASE_URL (dla servera postgres hostowanego lokalnie  - ```postgres://[USERNAME]:[PASSWORD]@localhost:5432/[DATABASE_NAME]```)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Po utworzeniu pliku ```.env``` uruchom skrypt ```npx prisma migrate dev``` aby zainicjować bazę danych.
 
 3. W pliku ```reactmap\frontend\src\components\Main.jsx``` wewnątrz funkcji ```google.accounts.id.initialize``` zmień wartość ```client_id``` na google client id swojej aplikacji.
 

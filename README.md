@@ -47,12 +47,14 @@
 
 1. Run the initialization script ```npm run init```. This will run npm install for backend and frontend and create the ```.env``` file. When asked, specify the environment variables. 
 
-2. If you're on Windows, you might have to create the ```.env``` file manually. You'll need the following variables:
+2. If you're on Windows, you might have to create the ```.env``` file and initialize the database manually. You'll need the following variables:
   - PORT (backend servers port number)
   - NODE_ENV (variable for specifying the apps environment - "development" or "production")
   - GOOGLE_CLIENT_ID (your applications google client id - found in google cloud console)
   - JWT_SECRET (key for generating JWT tokens)
   - DATABASE_URL (for postgresql database hosted on local machine  - ```postgres://[USERNAME]:[PASSWORD]@localhost:5432/[DATABASE_NAME]```)
+  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;After creating the ```.env``` file run the command ```npx prisma migrate dev``` to initialize the database.
 
 3. Inside the file ```reactmap\frontend\src\components\Main.jsx``` inside function ```google.accounts.id.initialize``` set the ```client_id``` value to your applications google client id
 

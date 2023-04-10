@@ -4,7 +4,7 @@
   "description": "",
   "main": "backend/server.js",
   "scripts": {
-    "init": "npm install --prefix frontend && npm install && read -p \"Specify database url: \" DATABASE_URL && read -p \"Specify JWT secret: \" JWT_SECRET && read -p \"Specify google client id: \" GOOGLE_CLIENT_ID && printf \"GOOGLE_CLIENT_ID = $GOOGLE_CLIENT_ID\nNODE_ENV = development\nPORT = 5000\nDATABASE_URL = $DATABASE_URL\nJWT_SECRET = $JWT_SECRET\" > .env",
+    "init": "npm install --prefix frontend && npm install && read -p \"Specify database url: \" DATABASE_URL && read -p \"Specify JWT secret: \" JWT_SECRET && read -p \"Specify google client id: \" GOOGLE_CLIENT_ID && printf \"GOOGLE_CLIENT_ID = $GOOGLE_CLIENT_ID\nNODE_ENV = development\nPORT = 5000\nDATABASE_URL = $DATABASE_URL\nJWT_SECRET = $JWT_SECRET\" > .env && npx prisma migrate dev",
     "server": "nodemon backend/server.js",
     "client": "npm run dev --prefix frontend",
     "start": "concurrently \"npm run server\" \"npm run client\"",
