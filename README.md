@@ -1,6 +1,8 @@
 [![pl](https://img.shields.io/badge/lang-pl-blue.svg)](https://github.com/ukashu/reactmap/blob/main/README.pl.md)
 # Flight Planning web application
 
+> :warning: The calculations are incorrect at the moment.
+
 >## Description
 
 &nbsp;&nbsp;&nbsp;&nbsp;This application calculates data needed for a flight plan based on input data and a route drawn on a OpenLayers provided map. It features an option to read magnetic declination and wind data from external sources via HTTP. It provides authorization built around google sign in and JWT tokens and a possibility of saving previous flights in a PostgreSQL database.
