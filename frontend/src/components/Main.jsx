@@ -210,7 +210,7 @@ function Main() {
           WS: inputs.ws,
           WTA: inputs.wta
         }
-      })) //await needed i think
+      })) //await needed maybe TODO
       window.open('/form')
     } catch(err) { 
       if (err.response.data.message) {toast.error(err.response.data.message) }

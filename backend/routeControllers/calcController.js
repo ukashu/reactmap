@@ -2,10 +2,8 @@ const asyncHandler = require('express-async-handler')
 //POST /api/calc
 //calculate variables
 
-//ground speed zmienia się o 20 węzłów przy zmianie stopnia o jeden w prawo, czy to się zgadza? TODO
-//if inputs are 0 response is null TODO
+//ground speed zmienia się o 20 węzłów przy zmianie stopnia o jeden w prawo TODO
 const getCalc = asyncHandler(async(req, res) => {
-  //it doesn't support zero values!! TODO
   if (req.body.coordinates.length === 0 || req.body.coordinates === undefined || req.body.geoCoordinates === undefined|| req.body.distance === undefined || req.body.md === undefined || !req.body.tas || req.body.ws === undefined || req.body.wta === undefined) {
     res.status(400)
     throw new Error('Please provide all outside variables')
@@ -62,11 +60,10 @@ function calc(cord1, cord2, S, MD, TAS, WS, WTA) {
   let MT = TT - MD
 
   //calculate drift angle
-  let DA = (Math.sin(((WTA + 180 - MD) - MT) * Math.PI / 180)) * ((60 * WS) / TAS) //dzielenie przez zero! TODO
+  let DA = (Math.sin(((WTA + 180 - MD) - MT) * Math.PI / 180)) * ((60 * WS) / TAS)
 
   //calculate magnetic heading
   let MH = MT - DA
-  //te if elsy wystarczą?
   if (MH <= 0) {
     MH = 360 + MH
   } else if (MH > 360) {
@@ -74,7 +71,7 @@ function calc(cord1, cord2, S, MD, TAS, WS, WTA) {
   }
 
   //calculate ground speed
-  //true track 360 makes a difference here !!!
+  //true track 360 makes a difference here
   let GS =  TAS+(WS*(Math.cos(((WTA + 180)-(TT+(((MH + MD)-TT)/2))) * Math.PI / 180)))
 
   //calculate time

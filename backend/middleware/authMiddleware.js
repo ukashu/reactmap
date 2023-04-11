@@ -21,9 +21,6 @@ const protect = asyncHandler(async (req, res, next) => {
         },
       })
 
-      //handle if not found here eles you get an error
-      //TypeError: Cannot read properties of null (reading 'id')
-
       req.user = {
         id: foundUser.id,
         name: foundUser.name

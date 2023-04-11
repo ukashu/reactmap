@@ -1,7 +1,7 @@
 [![pl](https://img.shields.io/badge/lang-pl-blue.svg)](https://github.com/ukashu/reactmap/blob/main/README.pl.md)
 # Flight Planning web application
 
-> :warning: The calculations are incorrect at the moment.
+> :warning: Some calculations are incorrect at the moment.
 
 >## Description
 

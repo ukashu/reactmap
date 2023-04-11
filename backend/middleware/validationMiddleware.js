@@ -1,7 +1,5 @@
 const validate = function(req, res, next) {
 
-  //console.log({params: req.params, body: req.body})
-
   let isAZString = /[^a-z0-9]/gmi
 
   //validate body

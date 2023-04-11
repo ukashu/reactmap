@@ -5,13 +5,11 @@ const { windAPI } = require('../apis/windAPI.js')
 //POST /api/declination
 //get declination for coordinates
 const getDeclination = asyncHandler(async(req, res) => {
-  //it doesn't support zero values!! TODO
   if (req.body.geoCoordinates.length === 0 || req.body.geoCoordinates === undefined) {
     res.status(400)
     throw new Error('Please provide all outside variables')
   }
 
-  //MD scraper - one call just for testing
   const decl = await declinationAPI.get(req.body.geoCoordinates[1], req.body.geoCoordinates[0])
   res.json({declination: Number(decl)})
 })

@@ -1,7 +1,7 @@
 import '../App.css'
 
 function Flight(props) {
-  //here you read data saved in storage TODO
+  //here you read data saved in storage
   //and display it in the form TODO
   
 
