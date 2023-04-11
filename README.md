@@ -3,6 +3,8 @@
 
 > :warning: Some calculations are incorrect at the moment.
 
+![sample](./reactmap_sample.png)
+
 >## Description
 
 &nbsp;&nbsp;&nbsp;&nbsp;This application calculates data needed for a flight plan based on input data and a route drawn on an OpenLayers map. It features an option to read magnetic declination and wind data from external sources via HTTP. It provides authorization built around google sign in and JWT tokens and a possibility of saving previous flights in a PostgreSQL database.

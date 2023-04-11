@@ -3,6 +3,8 @@
 
 > :warning: Niektóre obliczenia w obecnej wersji są błędne.
 
+![sample](./reactmap_sample.png)
+
 >## Opis
 
 &nbsp;&nbsp;&nbsp;&nbsp; Aplikacja służąca do wyliczania danych potrzebnych do lotu. Na podstawie trasy narysowanej na mapie OpenLayers i wprowadzonych danych kalkuluje dane nawigacyjne. Daje możliwość pobrania danych wiatru oraz deklinacji magnetycznej z zewnętrznych źródeł przez HTTP. Zapewnia możliwość zalogowania się kontem Google z uwierzytelnieniem za pomocą tokena JWT oraz funkcję zapisania lotów w bazie danych PostgreSQL.
