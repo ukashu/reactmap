@@ -17,7 +17,7 @@ app.use(express.urlencoded({extended: false}))
 app.use(validate)
 
 app.route('/api/login').post(login)
-app.route('/api/me').get(protect, getPlans).post(protect, savePlan)
+app.route('/api/plans').get(protect, getPlans).post(protect, savePlan)
 app.route('/api/calc').post(getCalc)
 app.route('/api/declination').post(getDeclination)
 app.route('/api/wind').post(getWind)
