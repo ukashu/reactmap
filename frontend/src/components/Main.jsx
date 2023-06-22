@@ -185,7 +185,7 @@ function Main() {
       },
     }
     try {
-      const res = await axios.get('/api/me', config)
+      const res = await axios.get('/api/plans', config)
       setFlights(res.data)
     } catch(err) { 
       if (err.response.data.message) {
@@ -224,7 +224,7 @@ function Main() {
       },
     }
     try {
-      const res = await axios.post('/api/me', data, config)
+      const res = await axios.post('/api/plans', data, config)
       console.log(res.data)
     } catch(err) { 
       if (err.response.data.message) {toast.error(err.response.data.message) }
