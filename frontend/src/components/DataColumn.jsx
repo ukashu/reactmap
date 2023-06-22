@@ -9,7 +9,8 @@ function DataColumn(props) {
     let rows = []
     for (let i = 0; i < 10; i++) {
       rows.push(<div>{(props.data.sections[i] && props.data.sections[i][props.display]) ? props.data.sections[i][props.display] : (props.data.sections[i] && props.data.constants[props.display] ? props.data.constants[props.display] : '')}</div>)
-    } return rows
+    } 
+    return rows
   }
 
   return (

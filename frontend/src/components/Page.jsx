@@ -52,16 +52,11 @@ function Page() {
           <div id="trasa-box" className="trasa-box">
             <div id="trasa" className="trasa">
               <div style={{height: "15px"}}><p>TRASA</p></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
+              {(() => {
+                let divs = []
+                for (let i = 0; i < 10; i++) { divs.push(<div></div>)}
+                return divs
+              })()}
             </div>
             <DataColumn name="nkdg" display="TT" data={calcData}></DataColumn>
             <DataColumn name="m" display="MD" data={calcData}></DataColumn>
@@ -78,33 +73,19 @@ function Page() {
           </div>
           <div id="zapas-1-box" className="zapas-box">
             <div style={{minWidth: "100px", borderLeft: "solid 1px black"}}><p>LOTN. ZAPAS. I</p></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+            {(() => {
+              let divs = []
+              for (let i = 0; i < 12; i++) { divs.push(<div></div>)}
+              return divs
+            })()}
           </div>
           <div id="zapas-2-box" className="zapas-box">
             <div style={{minWidth: "100px", borderLeft: "solid 1px black"}}><p>LOTN. ZAPAS. II</p></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+            {(() => {
+              let divs = []
+              for (let i = 0; i < 12; i++) { divs.push(<div></div>)}
+              return divs
+            })()}
           </div>
           <div id="zgoda-2-box" className="zgoda-box">
             <div id="zgoda-odlot" className="zgoda-odlot"><p>ZGODA (DOLOT)</p><textarea id="zgoda-dolot"></textarea></div>

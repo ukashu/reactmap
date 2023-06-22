@@ -198,7 +198,6 @@ function Main() {
   }
 
   async function sendDataToCalculate(data) {
-    //save response in localstorage for form generation TODO
     try {
       const res = await axios.post('/api/calc', data)
       console.log(res.data)
@@ -210,7 +209,7 @@ function Main() {
           WS: inputs.ws,
           WTA: inputs.wta
         }
-      })) //await needed maybe TODO
+      }))
       window.open('/form')
     } catch(err) { 
       if (err.response.data.message) {toast.error(err.response.data.message) }
